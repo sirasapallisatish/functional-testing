@@ -28,7 +28,7 @@ pipeline
         {
             steps
             {
-               git 'https://github.com/Madhavaraochalla/Testing-code.git'
+               git 'https://github.com/sirasapallisatish/functional-testing.git'
             }
         }
         stage('ContinousDelivary')
