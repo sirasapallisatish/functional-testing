@@ -1,0 +1,46 @@
+pipeline
+{
+    agent any
+     stages
+    {
+        stage('continousDownload')
+        {
+         steps
+          {
+            git 'https://github.com/sirasapallisatish/maven1.git'
+          }
+        }
+        stage('continousBuild')
+        {
+         steps
+         {
+             sh 'mvn package'
+         }
+        }
+        stage('continousDeployment')
+        {
+            steps
+            {
+              deploy adapters: [tomcat9(credentialsId: '44d1f586-db66-40ca-bcb8-e54891648131', path: '', url: 'http://172.31.3.197:8080')], contextPath: 'testapp', war: '**/*.war'
+            }
+        }
+        stage('continoustesting')
+        {
+            steps
+            {
+               git 'https://github.com/sirasapallisatish/functional-testing.git'
+            }
+        }
+    }
+        post
+        {
+            success
+            {
+             deploy adapters: [tomcat9(credentialsId: '44d1f586-db66-40ca-bcb8-e54891648131', path: '', url: 'http://172.31.1.101:8080')], contextPath: 'myprodapp', war: '**/*.war'
+            }
+                 failure
+               {
+                 mail bcc: '', body: 'the jenkins ci has failed', cc: '', from: '', replyTo: '', subject: 'ci failed', to: 'sirasapallisatish3@gmail.com'
+                }
+        }
+}
