@@ -1,6 +1,6 @@
 node('built-in') 
 {
-   stage('ContinuousDownload')
+   stage('ContinuousDownload_loans')
    {
        try
        {
@@ -24,17 +24,4 @@ node('built-in')
            exit(1)
        }
    }
-   stage('ContinuousDeployment')
-   {
-       try
-       {
-         deploy adapters: [tomcat9(credentialsId: '44d1f586-db66-40ca-bcb8-e54891648131', path: '', url: 'http://172.31.3.197:8080')], contextPath: 'testapp', war: '**/*.war'
-       }
-       catch(Exception e3)
-       {
-            mail bcc: '', body: 'Jenkins is unable to deploy into tomcat on the QAservers', cc: '', from: '', replyTo: '', subject: 'Deployment Failed', to: 'middleware.team@gmail.com'
-            exit(1)
-       }
-   }
 }
-
