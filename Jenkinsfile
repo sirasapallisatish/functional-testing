@@ -12,7 +12,7 @@ node('built-in')
             exit(1)
        }
    }
-   stage('ContinuousBuild_master')
+   stage('ContinuousBuild')
    {
        try
        {
@@ -24,7 +24,7 @@ node('built-in')
            exit(1)
        }
    }
-   stage('ContinuousDeployment_master')
+   stage('ContinuousDeployment')
    {
        try
        {
@@ -36,31 +36,5 @@ node('built-in')
             exit(1)
        }
    }
-   stage('ContinuousTesting_master')
-   {
-       try
-       {
-         git 'https://github.com/sirasapallisatish/functional-testing.git'
-       }
-       catch(Exception e4)
-       {
-           mail bcc: '', body: 'Selenium scripts are showing a failure status', cc: '', from: '', replyTo: '', subject: 'Testing Failed', to: 'qa.team@gmail.com'
-           exit(1)
-       }
-   }
-   stage('ContinuousDelivery_master')
-   {
-       try
-       {
-          input message: 'approval from last stage', submitter: 'karthik'
-         deploy adapters: [tomcat9(credentialsId: '44d1f586-db66-40ca-bcb8-e54891648131', path: '', url: 'http://172.31.1.101:8080')], contextPath: 'prodapp', war: '**/*.war'
-       }
-       catch(Exception e5)
-       {
-           mail bcc: '', body: 'Jenkins is unable to deploy into tomcat on the prodservers', cc: '', from: '', replyTo: '', subject: 'Delivery Failed', to: 'delivery.team@gmail.com'   
-       }
-   }
-   
 }
 
-:

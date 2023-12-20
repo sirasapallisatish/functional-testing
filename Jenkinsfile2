@@ -1,7 +1,13 @@
+<<<<<<< HEAD
 
 node('built-in') 
 {
    stage('ContinuousDownload_master')
+=======
+node('built-in') 
+{
+   stage('ContinuousDownload_loans')
+>>>>>>> 5660294d2299f2a170adf00ba4da6f0701b69b0c
    {
        try
        {
@@ -25,6 +31,7 @@ node('built-in')
            exit(1)
        }
    }
+<<<<<<< HEAD
    stage('ContinuousDeployment_master')
    {
        try
@@ -64,3 +71,6 @@ node('built-in')
    
 }
 
+=======
+}
+>>>>>>> 5660294d2299f2a170adf00ba4da6f0701b69b0c
